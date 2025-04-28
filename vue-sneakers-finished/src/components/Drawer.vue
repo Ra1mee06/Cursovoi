@@ -2,14 +2,15 @@
 import axios from 'axios'
 import { ref, computed, inject } from 'vue'
 
-import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
 import InfoBlock from './InfoBlock.vue'
+import DrawerHead from './DrawerHead.vue'
 
 const props = defineProps({
   totalPrice: Number,
   vatPrice: Number
 })
+
 
 const { cart, closeDrawer } = inject('cart')
 
@@ -42,7 +43,7 @@ const buttonDisabled = computed(() => isCreating.value || cartIsEmpty.value)
 <template>
   <div class="fixed top-0 left-0 h-full w-full bg-black z-10 opacity-70"></div>
   <div class="bg-white w-96 h-full fixed right-0 top-0 z-20 p-8">
-    <DrawerHead />
+    <DrawerHead></DrawerHead>
 
     <div v-if="!totalPrice || orderId" class="flex h-full items-center">
       <InfoBlock

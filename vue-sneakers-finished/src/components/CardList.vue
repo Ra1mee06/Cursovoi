@@ -1,3 +1,4 @@
+CardList.vue:
 <script setup>
 import Card from './Card.vue'
 

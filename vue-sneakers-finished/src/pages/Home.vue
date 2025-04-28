@@ -102,22 +102,22 @@ const fetchItems = async () => {
 onMounted(async () => {
   const localCart = localStorage.getItem('cart')
   cart.value = localCart ? JSON.parse(localCart) : []
+  
+  cart.value = cart.value.map(item => ({
+    ...item,
+    quantity: item.quantity || 1
+  }))
 
   await fetchItems()
   await fetchFavorites()
-
-  items.value = items.value.map((item) => ({
-    ...item,
-    isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
-  }))
 })
 
 watch(cart, () => {
   items.value = items.value.map((item) => ({
     ...item,
-    isAdded: false
+    isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
   }))
-})
+}, { deep: true })
 
 watch(filters, fetchItems)
 </script>
@@ -146,6 +146,6 @@ watch(filters, fetchItems)
   </div>
 
   <div class="mt-10">
-    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus" />
+    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus"></CardList>
   </div>
 </template>

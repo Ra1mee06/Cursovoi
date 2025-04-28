@@ -1,11 +1,14 @@
 <script setup>
-const emit = defineEmits(['onClickRemove'])
+const emit = defineEmits(['onClickRemove', 'onClickDelete', 'onClickAdd'])
+
+
 
 defineProps({
   id: Number,
   title: String,
   imageUrl: String,
-  price: Number
+  price: Number,
+  quantity: Number
 })
 </script>
 
@@ -17,11 +20,25 @@ defineProps({
       <p>{{ title }}</p>
 
       <div class="flex justify-between mt-2">
-        <b class="flex-1">{{ price }} bun</b>
+        <b class="flex-1">{{ price }} бун</b>
+        <span v-if="quantity" class="mx-2">{{ quantity }} шт.</span>
         <img
-          @click="emit('onClickRemove')"
+          @click="$emit('onClickAdd')"
           class="opacity-40 hover:opacity-100 cursor-pointer transition"
-          src="/close.svg"
+          src="/plus.svg"
+          alt="+"
+        />
+        <img
+          @click="$emit('onClickDelete')"
+          class="opacity-40 hover:opacity-100 cursor-pointer transition"
+          src="/minus.svg"
+          alt="-"
+        />
+        <img
+          @click="$emit('onClickRemove')"
+          class="opacity-40 hover:opacity-100 cursor-pointer transition"
+          src="/trash.svg"
+          alt="×"
         />
       </div>
     </div>

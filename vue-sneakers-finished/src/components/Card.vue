@@ -7,7 +7,8 @@ defineProps({
   isFavorite: Boolean,
   isAdded: Boolean,
   onClickFavorite: Function,
-  onClickAdd: Function
+  onClickAdd: Function,
+  quantity: Number
 })
 </script>
 
@@ -23,7 +24,7 @@ defineProps({
       @click="onClickFavorite"
     />
 
-    <img :src="imageUrl" alt="Cookie" />
+    <img :src="imageUrl" alt="Cookie"  class="max-w-full max-h-full object-contain p-4"/>
 
     <p class="mt-2">{{ title }}</p>
 
