@@ -33,71 +33,71 @@ const onChangeSearchInput = debounce((event) => {
 const addToFavorite = async (item) => {
   try {
     if (!item.isFavorite) {
-      const obj = {
+      const { data } = await axios.post('https://17b8e0fa574c3024.mokky.dev/favorites', {
         item_id: item.id
-      }
-
-      item.isFavorite = true
-
-      const { data } = await axios.post(`https://17b8e0fa574c3024.mokky.dev/favorites`, obj)
-
-      item.favoriteId = data.id
+      });
+      
+      item.isFavorite = true;
+      item.favoriteId = data.id;
     } else {
-      item.isFavorite = false
-      await axios.delete(`https://17b8e0fa574c3024.mokky.dev/favorites/${item.favoriteId}`)
-      item.favoriteId = null
+      await axios.delete(`https://17b8e0fa574c3024.mokky.dev/favorites/${item.favoriteId}`);
+      item.isFavorite = false;
+      item.favoriteId = null;
     }
+    
+    await fetchFavorites();
   } catch (err) {
-    console.log(err)
+    console.error("Ошибка при обновлении избранного:", err);
   }
-}
+};
 
 const fetchFavorites = async () => {
   try {
-    const { data: favorites } = await axios.get(`https://17b8e0fa574c3024.mokky.dev/favorites`)
-
-    items.value = items.value.map((item) => {
-      const favorite = favorites.find((favorite) => favorite.item_id === item.id)
-
-      if (!favorite) {
-        return item
-      }
-
+    const { data } = await axios.get('https://17b8e0fa574c3024.mokky.dev/favorites');
+    
+    items.value = items.value.map(item => {
+      const favorite = data.find(fav => fav.item_id === item.id);
       return {
         ...item,
-        isFavorite: true,
-        favoriteId: favorite.id
-      }
-    })
+        isFavorite: !!favorite,
+        favoriteId: favorite?.id || null
+      };
+    });
   } catch (err) {
-    console.log(err)
+    console.error("Ошибка загрузки избранного:", err);
   }
-}
-
+};
 const fetchItems = async () => {
   try {
     const params = {
       sortBy: filters.sortBy
-    }
+    };
 
     if (filters.searchQuery) {
-      params.title = `*${filters.searchQuery}*`
+      params.title = `*${filters.searchQuery}*`;
     }
 
-    const { data } = await axios.get(`https://17b8e0fa574c3024.mokky.dev/items`, {
-      params
-    })
+    const { data } = await axios.get('https://17b8e0fa574c3024.mokky.dev/items', { params });
+    
+    console.log("Получены товары:", data); 
+    
+    if (!Array.isArray(data)) {
+      throw new Error("Некорректный формат данных");
+    }
 
-    items.value = data.map((obj) => ({
+    items.value = data.map(obj => ({
       ...obj,
       isFavorite: false,
       favoriteId: null,
       isAdded: false
-    }))
+    }));
+
+    await fetchFavorites();
   } catch (err) {
-    console.log(err)
+    console.error("Ошибка загрузки товаров:", err);
+    items.value = [];
   }
-}
+};
 
 onMounted(async () => {
   const localCart = localStorage.getItem('cart')

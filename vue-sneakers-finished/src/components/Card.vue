@@ -18,10 +18,10 @@ defineProps({
   >
     <img
       v-if="onClickFavorite"
-      :src="!isFavorite ? '/like-1.svg' : '/like-2.svg'"
-      alt="Like 1"
+      :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
       class="absolute top-8 left-8"
-      @click="onClickFavorite"
+      @click.stop="onClickFavorite"
+      alt="Favorite"
     />
 
     <img :src="imageUrl" alt="Cookie"  class="max-w-full max-h-full object-contain p-4"/>
