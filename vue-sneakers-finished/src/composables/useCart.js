@@ -80,6 +80,8 @@ export function useCart() {
       console.error("Ошибка обновления корзины:", error);
     }
   };
+
+  
   
   provide('cart', {
     cart,
