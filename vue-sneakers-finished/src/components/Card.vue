@@ -29,7 +29,7 @@ defineProps({
     <img
       v-if="onClickFavorite"
       :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
-      class="absolute top-8 left-8 hover:scale-110 transition"
+      class="absolute top-4 left-4 hover:scale-110 transition"
       @click.stop="onClickFavorite"
       alt="Favorite"
     />

@@ -1,5 +1,6 @@
 <script setup>
 import { useCart } from '../composables/useCart';
+import { useRouter } from 'vue-router';
 import Header from './Header.vue';
 import Drawer from './Drawer.vue';
 

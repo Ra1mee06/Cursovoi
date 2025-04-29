@@ -69,7 +69,18 @@ export function useCart() {
     localStorage.setItem('cart', JSON.stringify(newCart));
   }, { deep: true });
 
-  // Предоставляем данные и методы для дочерних компонентов
+  const updateCart = async (cartItems) => {
+    if (!userData.value) return;
+    
+    try {
+      await axios.patch(`${API_URL}/${userData.value.id}`, {
+        cartItems
+      });
+    } catch (error) {
+      console.error("Ошибка обновления корзины:", error);
+    }
+  };
+  
   provide('cart', {
     cart,
     totalPrice,

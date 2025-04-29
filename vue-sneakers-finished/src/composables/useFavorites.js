@@ -54,6 +54,18 @@ export function useFavorites() {
     }
   };
 
+  const addToFavorites = async (item) => {
+    if (!userData.value) return;
+    
+    try {
+      await axios.patch(`${API_URL}/${userData.value.id}`, {
+        favorites: [...userData.value.favorites, item.id]
+      });
+    } catch (error) {
+      console.error("Ошибка добавления в избранное:", error);
+    }
+  };
+
   return {
     favorites,
     fetchFavorites,

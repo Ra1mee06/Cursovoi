@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/Home.vue';
 import Favorites from '../pages/Favorites.vue';
+import Profile from '../pages/Profile.vue';
 
 const routes = [
   {
@@ -14,10 +15,10 @@ const routes = [
     name: 'Favorites',
     component: Favorites,
   },
-  {
-    path: '/profile',
+    {
+    path: '../pages/Profile.vue',
     name: 'Profile',
-    component: () => import('../pages/Profile.vue'), 
+    component: Profile,
   },
 ];
 
