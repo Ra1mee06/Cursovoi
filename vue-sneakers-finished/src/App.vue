@@ -1,86 +1,15 @@
 <script setup>
-import { ref, provide, watch, computed } from 'vue'
+import { useCart } from './composables/useCart';
+import Header from './components/Header.vue';
+import Drawer from './components/Drawer.vue';
 
-import Header from './components/Header.vue'
-import Drawer from './components/Drawer.vue'
-
-const cart = ref([])
-const drawerOpen = ref(false)
-
-const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price * (item.quantity || 1), 0))
-
-const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100))
-
-const closeDrawer = () => {
-  drawerOpen.value = false
-}
-
-
-const openDrawer = () => {
-  drawerOpen.value = true
-}
-
-const addToCart = (item) => {
-  item.isAdded = true
-  const existingItem = cart.value.find(i => i.id === item.id)
-  if (!existingItem) {
-    cart.value.push({ 
-      ...item, 
-      quantity: 1,  
-    })
-  }
-}
-
-
-const addToCartItem = (item) => {
-  const existingItem = cart.value.find(i => i.id === item.id)
-  if (existingItem) {
-    existingItem.quantity += 1
-  } else {
-    cart.value.push({ 
-      ...item, 
-      quantity: 1  
-    })
-  }
-}
-
-const removeFromCart = (item) => {
-  item.isAdded = false
-  const index = cart.value.findIndex((i) => i.id === item.id)
-  if (index !== -1) {
-    cart.value.splice(index, 1)
-  }
-}
-
-
-const increaseQuantity = (item) => {
-  const existingItem = cart.value.find(i => i.id === item.id)
-  if (existingItem) {
-    existingItem.quantity += 1
-  }
-}
-
-const decreaseQuantity = (item) => {
-  const existingItem = cart.value.find(i => i.id === item.id)
-  if (existingItem && existingItem.quantity > 1) {
-    existingItem.quantity -= 1
-  }
-}
-
-watch(cart, (newCart) => {
-  localStorage.setItem('cart', JSON.stringify(newCart))
-}, { deep: true })
-provide('cart', {
-  cart,
+const {
+  drawerOpen,
   totalPrice,
-  closeDrawer,
+  vatPrice,
   openDrawer,
-  addToCart,
-  addToCartItem,
-  removeFromCart,
-  increaseQuantity,
-  decreaseQuantity,
-})
+  closeDrawer,
+} = useCart();
 </script>
 
 <template>
@@ -91,10 +20,13 @@ provide('cart', {
   />
 
   <div v-else class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
-    <Header :total-price="totalPrice" @open-drawer="openDrawer"></Header>
+    <Header 
+      :total-price="totalPrice" 
+      @open-drawer="openDrawer" 
+    ></Header>
     
     <div class="p-10">
-      <RouterView />
+      <router-view />
     </div>
   </div>
 </template>

@@ -1,0 +1,30 @@
+// src/router/router.js
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from '../pages/Home.vue';
+import Favorites from '../pages/Favorites.vue';
+
+const routes = [
+  {
+    path: '../pages/Home.vue',
+    name: 'Home',
+    component: Home,
+  },
+  {
+    path: '../pages/Favorites.vue',
+    name: 'Favorites',
+    component: Favorites,
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../pages/Profile.vue'), 
+  },
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+
+export default router;

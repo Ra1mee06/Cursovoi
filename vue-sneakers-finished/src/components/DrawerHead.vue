@@ -1,7 +1,9 @@
 <script setup>
-import { inject } from 'vue'
+import { useRouter } from 'vue-router';
+import { inject } from 'vue';
 
-const { closeDrawer } = inject('cart')
+const router = useRouter();
+const { closeDrawer } = inject('cart');
 </script>
 
 <template>
