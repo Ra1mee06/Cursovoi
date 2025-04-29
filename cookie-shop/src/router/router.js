@@ -1,4 +1,3 @@
-// src/router/router.js
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/Home.vue';
 import Favorites from '../pages/Favorites.vue';
