@@ -1,7 +1,7 @@
 <script setup>
-import GlobalCompopents from './components/GlobalCompopent.vue'
+import GlobalComponents from './components/GlobalComponent.vue'
 </script>
 
 <template>
-  <GlobalCompopents></GlobalCompopents>
+  <GlobalComponents></GlobalComponents>
 </template>

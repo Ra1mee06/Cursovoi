@@ -19,27 +19,30 @@ defineProps({
     <div class="flex flex-col flex-1">
       <p>{{ title }}</p>
 
-      <div class="flex justify-between mt-2">
+      <div class="flex justify-between mt-2 items-center">
         <b class="flex-1">{{ price }} бун</b>
         <span v-if="quantity" class="mx-2">{{ quantity }} шт.</span>
-        <img
+        
+        <button
           @click="$emit('onClickAdd')"
-          class="opacity-40 hover:opacity-100 cursor-pointer transition"
-          src="/plus.svg"
-          alt="+"
-        />
-        <img
+          class="p-2 bg-white rounded-full border border-slate-200 shadow-sm hover:bg-green-50 hover:border-green-200 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <img src="/plus.svg" alt="+" class="w-5 h-5 opacity-80 hover:opacity-100" />
+        </button>
+        
+        <button
           @click="$emit('onClickDelete')"
-          class="opacity-40 hover:opacity-100 cursor-pointer transition"
-          src="/minus.svg"
-          alt="-"
-        />
-        <img
+          class="p-2 bg-white rounded-full border border-slate-200 shadow-sm hover:bg-yellow-50 hover:border-yellow-200 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md mx-1"
+        >
+          <img src="/minus.svg" alt="-" class="w-5 h-5 opacity-80 hover:opacity-100" />
+        </button>
+        
+        <button
           @click="$emit('onClickRemove')"
-          class="opacity-40 hover:opacity-100 cursor-pointer transition"
-          src="/trash.svg"
-          alt="×"
-        />
+          class="p-2 bg-white rounded-full border border-slate-200 shadow-sm hover:bg-red-50 hover:border-red-200 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <img src="/trash.svg" alt="×" class="w-5 h-5 opacity-80 hover:opacity-100" />
+        </button>
       </div>
     </div>
   </div>

@@ -4,8 +4,10 @@ import axios from 'axios'
 import debounce from 'lodash.debounce'
 import { inject } from 'vue'
 import CardList from '../components/CardList.vue'
+import { useFavorites } from '../composables/useFavorites'
 
 const { cart, addToCart, removeFromCart } = inject('cart')
+const { fetchFavorites, toggleFavorite } = useFavorites()
 
 const items = ref([])
 
@@ -31,42 +33,22 @@ const onChangeSearchInput = debounce((event) => {
 }, 300)
 
 const addToFavorite = async (item) => {
-  try {
-    if (!item.isFavorite) {
-      const { data } = await axios.post('https://17b8e0fa574c3024.mokky.dev/favorites', {
-        item_id: item.id
-      });
-      
-      item.isFavorite = true;
-      item.favoriteId = data.id;
-    } else {
-      await axios.delete(`https://17b8e0fa574c3024.mokky.dev/favorites/${item.favoriteId}`);
-      item.isFavorite = false;
-      item.favoriteId = null;
-    }
-    
-    await fetchFavorites();
-  } catch (err) {
-    console.error("Ошибка при обновлении избранного:", err);
-  }
+  await toggleFavorite(item);
+  await updateItemsFavoritesStatus();
 };
 
-const fetchFavorites = async () => {
-  try {
-    const { data } = await axios.get('https://17b8e0fa574c3024.mokky.dev/favorites');
-    
-    items.value = items.value.map(item => {
-      const favorite = data.find(fav => fav.item_id === item.id);
-      return {
-        ...item,
-        isFavorite: !!favorite,
-        favoriteId: favorite?.id || null
-      };
-    });
-  } catch (err) {
-    console.error("Ошибка загрузки избранного:", err);
-  }
+const updateItemsFavoritesStatus = async () => {
+  const favoritesData = await fetchFavorites();
+  items.value = items.value.map(item => {
+    const favorite = favoritesData.find(fav => fav.item_id === item.id);
+    return {
+      ...item,
+      isFavorite: !!favorite,
+      favoriteId: favorite?.id || null
+    };
+  });
 };
+
 const fetchItems = async () => {
   try {
     const params = {
@@ -79,12 +61,6 @@ const fetchItems = async () => {
 
     const { data } = await axios.get('https://17b8e0fa574c3024.mokky.dev/items', { params });
     
-    console.log("Получены товары:", data); 
-    
-    if (!Array.isArray(data)) {
-      throw new Error("Некорректный формат данных");
-    }
-
     items.value = data.map(obj => ({
       ...obj,
       isFavorite: false,
@@ -92,7 +68,7 @@ const fetchItems = async () => {
       isAdded: false
     }));
 
-    await fetchFavorites();
+    await updateItemsFavoritesStatus();
   } catch (err) {
     console.error("Ошибка загрузки товаров:", err);
     items.value = [];
@@ -109,7 +85,6 @@ onMounted(async () => {
   }))
 
   await fetchItems()
-  await fetchFavorites()
 })
 
 watch(cart, () => {

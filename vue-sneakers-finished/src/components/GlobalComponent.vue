@@ -1,7 +1,7 @@
 <script setup>
 import { useCart } from '../composables/useCart';
-import Header from '../components/Header.vue';
-import Drawer from '../components/Drawer.vue';
+import Header from './Header.vue';
+import Drawer from './Drawer.vue';
 
 const {
   drawerOpen,

@@ -27,26 +27,26 @@ const emit = defineEmits(['openDrawer']);
     <ul class="flex items-center gap-10">
       <li
         @click="() => emit('openDrawer')"
-        class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black"
+        class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md p-2 rounded-lg"
       >
-        <img src="/cart.svg" alt="Cart" />
+        <img src="/cart.svg" alt="Cart" class="transition-all duration-300" />
         <b>{{ totalPrice }} бун.</b>
       </li>
 
       <router-link 
         to="/favorites" 
-        class="flex items-center gap-3"
+        class="flex items-center gap-3 p-2 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md"
         :class="currentRoute === '/favorites' ? 'text-black' : 'text-gray-500 hover:text-black'"
       >
-        <img src="/heart.svg" alt="Favorites" />
+        <img src="/heart.svg" alt="Favorites" class="transition-all duration-300" />
         <span>Закладки</span>
       </router-link>
 
       <router-link 
         to="/profile" 
-        class="flex items-center gap-3 text-gray-500 hover:text-black"
+        class="flex items-center gap-3 text-gray-500 hover:text-black p-2 rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-md"
       >
-        <img src="/profile.svg" alt="Profile" />
+        <img src="/profile.svg" alt="Profile" class="transition-all duration-300" />
         <span>Профиль</span>
       </router-link>
     </ul>

@@ -1,4 +1,3 @@
-CardList.vue:
 <script setup>
 import Card from './Card.vue'
 
@@ -7,7 +6,7 @@ defineProps({
   isFavorites: Boolean
 })
 
-const emit = defineEmits(['addToFavorite', 'addToCart'])
+const emit = defineEmits(['addToFavorite', 'addToCart', 'removeFromFavorites'])
 </script>
 
 <template>
@@ -21,6 +20,7 @@ const emit = defineEmits(['addToFavorite', 'addToCart'])
       :price="item.price"
       :onClickFavorite="isFavorites ? null : () => emit('addToFavorite', item)"
       :onClickAdd="isFavorites ? null : () => emit('addToCart', item)"
+      :onClickRemove="isFavorites ? () => emit('removeFromFavorites', item) : null"
       :isFavorite="item.isFavorite"
       :isAdded="item.isAdded"
     />

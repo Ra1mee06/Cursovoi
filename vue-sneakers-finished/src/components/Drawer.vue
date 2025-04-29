@@ -77,12 +77,12 @@ const buttonDisabled = computed(() => isCreating.value || cartIsEmpty.value)
         </div>
 
         <button
-          :disabled="buttonDisabled"
-          @click="createOrder"
-          class="mt-4 transition bg-lime-500 w-full rounded-xl py-3 text-white disabled:bg-slate-300 hover:bg-lime-600 active:bg-lime-700 cursor-pointer"
-        >
-          Оформить заказ
-        </button>
+  :disabled="buttonDisabled"
+  @click="createOrder"
+  class="mt-4 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg bg-lime-500 w-full rounded-xl py-3 text-white disabled:bg-slate-300 hover:bg-lime-600 active:bg-lime-700 active:scale-95 cursor-pointer"
+>
+  Оформить заказ
+</button>
       </div>
     </div>
   </div>
