@@ -1,10 +1,23 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-export function useFavorites() {
-  const favorites = ref([]);
+interface FavoriteItem {
+  id: number;
+  item_id: number;
+  [key: string]: any;
+}
 
-  const fetchFavorites = async () => {
+interface UserItem {
+  id: number;
+  isFavorite?: boolean;
+  favoriteId?: number | null;
+  [key: string]: any;
+}
+
+export function useFavorites() {
+  const favorites = ref<FavoriteItem[]>([]);
+
+  const fetchFavorites = async (): Promise<FavoriteItem[]> => {
     try {
       const { data } = await axios.get('https://17b8e0fa574c3024.mokky.dev/favorites');
       return data;
@@ -14,7 +27,7 @@ export function useFavorites() {
     }
   };
 
-  const toggleFavorite = async (item) => {
+  const toggleFavorite = async (item: UserItem) => {
     try {
       if (!item.isFavorite) {
         const { data } = await axios.post('https://17b8e0fa574c3024.mokky.dev/favorites', {
@@ -23,7 +36,7 @@ export function useFavorites() {
         item.isFavorite = true;
         item.favoriteId = data.id;
       } else {
-        await removeFavorite(item.favoriteId);
+        await removeFavorite(item.favoriteId as number);
         item.isFavorite = false;
         item.favoriteId = null;
       }
@@ -32,7 +45,7 @@ export function useFavorites() {
     }
   };
 
-  const removeFavorite = async (favoriteId) => {
+  const removeFavorite = async (favoriteId: number) => {
     try {
       await axios.delete(`https://17b8e0fa574c3024.mokky.dev/favorites/${favoriteId}`);
     } catch (err) {
@@ -54,7 +67,7 @@ export function useFavorites() {
     }
   };
 
-  const addToFavorites = async (item) => {
+  const addToFavorites = async (item: UserItem) => {
     if (!userData.value) return;
     
     try {
@@ -71,6 +84,10 @@ export function useFavorites() {
     fetchFavorites,
     toggleFavorite,
     removeFavorite,
-    clearAllFavorites
+    clearAllFavorites,
+    addToFavorites
   };
 }
+
+declare const userData: { value: { id: number; favorites: number[] } };
+declare const API_URL: string;

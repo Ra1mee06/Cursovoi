@@ -1,7 +1,17 @@
-import { ref, computed, watch, provide } from 'vue';
+import { ref, computed, watch, provide, type InjectionKey } from 'vue';
+import axios from 'axios';
+
+interface CartItem {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  quantity: number;
+  isAdded?: boolean;
+}
 
 export function useCart() {
-  const cart = ref([]);
+  const cart = ref<CartItem[]>(JSON.parse(localStorage.getItem('cart') || '[]'));
   const drawerOpen = ref(false);
 
   const totalPrice = computed(() => 
@@ -20,7 +30,7 @@ export function useCart() {
     drawerOpen.value = true;
   };
 
-  const addToCart = (item) => {
+  const addToCart = (item: CartItem) => {
     item.isAdded = true;
     const existingItem = cart.value.find(i => i.id === item.id);
     if (!existingItem) {
@@ -31,7 +41,7 @@ export function useCart() {
     }
   };
 
-  const addToCartItem = (item) => {
+  const addToCartItem = (item: CartItem) => {
     const existingItem = cart.value.find(i => i.id === item.id);
     if (existingItem) {
       existingItem.quantity += 1;
@@ -43,7 +53,7 @@ export function useCart() {
     }
   };
 
-  const removeFromCart = (item) => {
+  const removeFromCart = (item: CartItem) => {
     item.isAdded = false;
     const index = cart.value.findIndex((i) => i.id === item.id);
     if (index !== -1) {
@@ -51,14 +61,14 @@ export function useCart() {
     }
   };
 
-  const increaseQuantity = (item) => {
+  const increaseQuantity = (item: CartItem) => {
     const existingItem = cart.value.find(i => i.id === item.id);
     if (existingItem) {
       existingItem.quantity += 1;
     }
   };
 
-  const decreaseQuantity = (item) => {
+  const decreaseQuantity = (item: CartItem) => {
     const existingItem = cart.value.find(i => i.id === item.id);
     if (existingItem && existingItem.quantity > 1) {
       existingItem.quantity -= 1;
@@ -69,7 +79,7 @@ export function useCart() {
     localStorage.setItem('cart', JSON.stringify(newCart));
   }, { deep: true });
 
-  const updateCart = async (cartItems) => {
+  const updateCart = async (cartItems: CartItem[]) => {
     if (!userData.value) return;
     
     try {
@@ -81,8 +91,6 @@ export function useCart() {
     }
   };
 
-  
-  
   provide('cart', {
     cart,
     totalPrice,
@@ -109,3 +117,6 @@ export function useCart() {
     decreaseQuantity,
   };
 }
+
+declare const userData: { value: { id: number } };
+declare const API_URL: string;

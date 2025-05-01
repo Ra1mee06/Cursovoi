@@ -18,8 +18,8 @@ const emit = defineEmits(['openDrawer']);
       <div class="flex items-center gap-4">
         <img src="/logo.png" alt="Logo" class="w-10" />
         <div>
-          <h2 class="text-xl font-bold uppercase">Homless cookies</h2>
-          <p class="text-slate-400">Лучший кондитерский магазин печенья</p>
+          <h2 class="text-xl font-bold uppercase">RЯЛЬНА COOKIES</h2>
+          <p class="text-slate-400">Самые лучше cookies в истории</p>
         </div>
       </div>
     </router-link>

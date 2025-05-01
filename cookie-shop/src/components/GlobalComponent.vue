@@ -14,20 +14,20 @@ const {
 </script>
 
 <template>
-  <Drawer 
-    v-if="drawerOpen" 
-    :total-price="totalPrice" 
-    :vat-price="vatPrice" 
-  />
-
-  <div v-else class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
+  <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
     <Header 
       :total-price="totalPrice" 
       @open-drawer="openDrawer" 
     ></Header>
     
     <div class="p-10">
-      <router-view />
+      <router-view ></router-view>
     </div>
   </div>
+
+  <Drawer 
+    v-if="drawerOpen" 
+    :total-price="totalPrice" 
+    :vat-price="vatPrice" 
+  />
 </template>

@@ -10,7 +10,7 @@ const { closeDrawer } = inject('cart');
   <div class="flex items-center gap-5 mb-8">
     <svg
       @click="closeDrawer"
-      class="opacity-30 cursor-pointer rotate-180 hover:opacity-100 transition hover:-translate-x-1"
+      class="ml-4 opacity-30 cursor-pointer rotate-180 hover:opacity-100 transition hover:-translate-x-1"
       width="16"
       height="14"
       viewBox="0 0 16 14"

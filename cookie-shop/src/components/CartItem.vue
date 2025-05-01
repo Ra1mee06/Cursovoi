@@ -1,8 +1,6 @@
 <script setup>
 const emit = defineEmits(['onClickRemove', 'onClickDelete', 'onClickAdd'])
 
-
-
 defineProps({
   id: Number,
   title: String,
