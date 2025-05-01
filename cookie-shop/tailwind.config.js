@@ -14,11 +14,19 @@ module.exports = {
           600: '#4f46e5',
         },
       },
+      transitionProperty: {
+        'transform-shadow': 'transform, box-shadow',
+      },
+      transitionDuration: {
+        '400': '400ms',
+      },
       animation: {
         'hover-scale': 'hoverScale 0.3s ease forwards',
         'modal-fade': 'modalFade 0.3s ease',
         'wiggle': 'wiggle 0.5s ease-in-out',
         'bounce': 'bounce 1s infinite',
+        'logo-pulse': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'logo-bounce': 'bounce 1s infinite',
       },
       keyframes: {
         hoverScale: {
@@ -34,6 +42,10 @@ module.exports = {
           '25%': { transform: 'rotate(-5deg) scale(1.2)' },
           '50%': { transform: 'rotate(5deg) scale(1.2)' },
           '75%': { transform: 'rotate(-5deg) scale(1.2)' },
+        },
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
         },
         bounce: {
           '0%, 100%': { 

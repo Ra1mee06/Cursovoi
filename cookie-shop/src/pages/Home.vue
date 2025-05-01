@@ -275,26 +275,3 @@ watch(filters, fetchItems)
 
 </template>
 
-<style>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-}
-
-.modal-content-enter-active,
-.modal-content-leave-active {
-  transition: all 0.3s ease;
-}
-.modal-content-enter-from {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.modal-content-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-</style>

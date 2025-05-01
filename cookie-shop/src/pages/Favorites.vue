@@ -15,6 +15,7 @@ const removeFromFavorites = async (item) => {
   }
 };
 
+
 const clearFavorites = async () => {
   try {
     await clearAllFavorites();
