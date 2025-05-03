@@ -6,7 +6,15 @@ import { inject } from 'vue'
 import CardList from '../components/CardList.vue'
 import { useFavorites } from '../composables/useFavorites'
 import { useSuggestions } from '@/composables/useSuggestions';
+import ProductModal from '@/components/ProductModal.vue'
 
+const selectedProduct = ref(null)
+const showModal = ref(false)
+
+const openProduct = (product) => {
+  selectedProduct.value = product
+  showModal.value = true
+}
 
 const { cart, addToCart, removeFromCart } = inject('cart')
 
@@ -170,7 +178,15 @@ watch(filters, fetchItems)
   </div>
 
   <div class="mt-10">
-    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus"></CardList>
+    <CardList :items="items"
+     @add-to-favorite="addToFavorite"
+      @add-to-cart="onClickAddPlus"
+      @product-click="openProduct"></CardList>
+
+      <ProductModal 
+    v-if="showModal"
+    :product="selectedProduct"
+    @close="showModal = false"></ProductModal>
   </div>
 
   <div class="w-full flex justify-center mt-8 mb-12"> 

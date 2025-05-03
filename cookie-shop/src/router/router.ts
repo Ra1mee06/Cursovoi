@@ -1,29 +1,35 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import Home from '../pages/Home.vue';
-import Favorites from '../pages/Favorites.vue';
-import Profile from '../pages/Profile.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '@/pages/Home.vue'
+import Favorites from '@/pages/Favorites.vue'
+import Profile from '@/pages/Profile.vue'
 
-const routes: RouteRecordRaw[] = [
+const routes = [
   {
-    path: '/',  
+    path: '/',
     name: 'Home',
-    component: Home,
+    component: Home
   },
   {
-    path: '/favorites',  
+    path: '/favorites',
     name: 'Favorites',
-    component: Favorites,
+    component: Favorites
   },
   {
-    path: '/profile',  
+    path: '/profile',
     name: 'Profile',
-    component: Profile,
+    component: Profile
   },
-];
+  {
+    path: '/product/:id',
+    name: 'Product',
+    component: () => import('@/pages/ProductPage.vue'),
+    props: true
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),  
-  routes,
-});
+  history: createWebHistory(),
+  routes
+})
 
-export default router;
+export default router

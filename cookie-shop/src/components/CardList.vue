@@ -23,6 +23,7 @@ const emit = defineEmits(['addToFavorite', 'addToCart', 'removeFromFavorites'])
       :onClickRemove="isFavorites ? () => emit('removeFromFavorites', item) : null"
       :isFavorite="item.isFavorite"
       :isAdded="item.isAdded"
+      :productClick="handleProductClick"
     />
   </div>
 </template>
