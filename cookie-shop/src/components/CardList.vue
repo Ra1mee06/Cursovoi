@@ -6,11 +6,15 @@ defineProps({
   isFavorites: Boolean
 })
 
-const emit = defineEmits(['addToFavorite', 'addToCart', 'removeFromFavorites'])
+const emit = defineEmits(['addToFavorite', 'addToCart', 'removeFromFavorites', 'productClick'])
+
+const handleProductClick = (product) => {
+  emit('productClick', product)
+}
 </script>
 
 <template>
-  <div class="grid grid-cols-4 gap-5" v-auto-animate>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" v-auto-animate>
     <Card
       v-for="item in items"
       :key="item.id"
@@ -23,7 +27,7 @@ const emit = defineEmits(['addToFavorite', 'addToCart', 'removeFromFavorites'])
       :onClickRemove="isFavorites ? () => emit('removeFromFavorites', item) : null"
       :isFavorite="item.isFavorite"
       :isAdded="item.isAdded"
-      :productClick="handleProductClick"
+      @product-click="handleProductClick"
     />
   </div>
 </template>

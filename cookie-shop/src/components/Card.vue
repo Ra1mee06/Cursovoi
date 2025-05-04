@@ -1,7 +1,5 @@
 <script setup>
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+import { ref } from 'vue'
 
 const props = defineProps({
   id: Number,
@@ -12,16 +10,31 @@ const props = defineProps({
   isAdded: Boolean,
   onClickFavorite: Function,
   onClickAdd: Function,
-  onClickRemove: Function
+  onClickRemove: Function,
+  quantity: Number
 })
 
-const goToProduct = () => {
-  router.push(`/product/${props.id}`)
+const emit = defineEmits(['productClick'])
+
+const isHovered = ref(false)
+
+const handleProductClick = () => {
+  emit('productClick', {
+    id: props.id,
+    title: props.title,
+    imageUrl: props.imageUrl,
+    price: props.price
+  })
 }
 </script>
 
 <template>
-  <div class="relative bg-white border border-slate-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl group">
+  <div
+    class="relative bg-white border border-slate-100 rounded-3xl p-8 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+    @mouseenter="isHovered = true"
+    @mouseleave="isHovered = false"
+  >
+    <!-- Кнопка удаления -->
     <div v-if="onClickRemove" class="absolute top-3 left-3 z-10">
       <button
         @click.stop="onClickRemove"
@@ -31,6 +44,7 @@ const goToProduct = () => {
       </button>
     </div>
 
+    <!-- Кнопка избранного -->
     <img
       v-if="onClickFavorite"
       :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
@@ -39,21 +53,31 @@ const goToProduct = () => {
       alt="Favorite"
     />
 
-    <div class="relative overflow-hidden rounded-lg mb-4 h-48">
+    <!-- Область с изображением -->
+    <div class="relative overflow-hidden rounded-lg mb-4 h-48" @click="handleProductClick">
       <img 
         :src="imageUrl" 
         :alt="title"
-        class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110 group-hover:-translate-y-3"
+        class="w-full h-full object-contain transition-transform duration-300"
+        :class="{'scale-105': isHovered}"
       />
       
-      <button
-        @click.stop="goToProduct"
-        class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full group-hover:-translate-y-4 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-lime-500 text-white px-6 py-2 rounded-full whitespace-nowrap shadow-md hover:bg-lime-600"
+      <!-- Кнопка "Подробнее" -->
+      <div
+        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-all duration-300"
+        :class="{'bg-opacity-20': isHovered}"
       >
-        Узнать больше
-      </button>
+        <button
+          v-show="isHovered"
+          class="bg-white text-lime-600 px-4 py-2 rounded-full font-medium shadow-lg transform transition-all duration-300 hover:scale-105"
+          @click.stop="handleProductClick"
+        >
+          Подробнее →
+        </button>
+      </div>
     </div>
 
+    <!-- Информация о товаре -->
     <p class="mt-2 font-medium text-lg">{{ title }}</p>
 
     <div class="flex justify-between mt-3 items-center">
@@ -72,9 +96,3 @@ const goToProduct = () => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.group:hover {
-  transform: translateY(-5px);
-}
-</style>

@@ -178,15 +178,18 @@ watch(filters, fetchItems)
   </div>
 
   <div class="mt-10">
-    <CardList :items="items"
-     @add-to-favorite="addToFavorite"
+    <CardList 
+      :items="items"
+      @add-to-favorite="addToFavorite"
       @add-to-cart="onClickAddPlus"
-      @product-click="openProduct"></CardList>
+      @product-click="openProduct"
+    />
 
-      <ProductModal 
-    v-if="showModal"
-    :product="selectedProduct"
-    @close="showModal = false"></ProductModal>
+    <ProductModal 
+      v-if="showModal"
+      :product="selectedProduct"
+      @close="showModal = false"
+    />
   </div>
 
   <div class="w-full flex justify-center mt-8 mb-12"> 
