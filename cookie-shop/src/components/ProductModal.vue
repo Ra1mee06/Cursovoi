@@ -7,7 +7,6 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-// Описания для каждого типа печенья
 const cookieDetails = {
   "Бабушкины тайны": {
     description: "Традиционная печенька с секретным рецептом, передающимся в семье из поколения в поколение.",
@@ -29,7 +28,6 @@ const cookieDetails = {
   }
 }
 
-// Получаем детали для текущего продукта
 const details = computed(() => {
   return cookieDetails[props.product?.title] || {
     description: "Ароматная домашняя печенька по традиционному рецепту",
@@ -46,7 +44,6 @@ const details = computed(() => {
       <button class="close-btn" @click="emit('close')">×</button>
       
       <div class="grid md:grid-cols-2 gap-8">
-        <!-- Изображение -->
         <div class="flex items-center">
           <img 
             :src="product.imageUrl" 
@@ -55,7 +52,6 @@ const details = computed(() => {
           >
         </div>
         
-        <!-- Информация -->
         <div class="space-y-4">
           <h2 class="text-3xl font-bold text-gray-800">{{ product.title }}</h2>
           <p class="text-2xl text-lime-600">{{ product.price }} бун</p>

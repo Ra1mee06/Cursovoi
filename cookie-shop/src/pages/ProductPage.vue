@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const product = ref(null)
 
-// Описания для каждого типа печенья
 const cookieDescriptions = {
   "Бабушкины тайны": {
     description: "Традиционная печенька с секретным рецептом, передающимся в семье из поколения в поколение. Содержит натуральные специи и мёд.",
@@ -25,11 +24,10 @@ const cookieDescriptions = {
 }
 
 onMounted(async () => {
-  // Эмуляция загрузки данных (в реальности будет запрос к API)
   setTimeout(() => {
     product.value = {
       id: route.params.id,
-      title: route.query.title || "Бабушкины тайны", // Для примера
+      title: route.query.title || "Бабушкины тайны", 
       imageUrl: "/cookie-" + route.params.id + ".jpg",
       price: 150,
       ...cookieDescriptions[route.query.title || "Бабушкины тайны"]
@@ -41,7 +39,6 @@ onMounted(async () => {
 <template>
   <div v-if="product" class="product-page max-w-6xl mx-auto p-6">
     <div class="grid md:grid-cols-2 gap-8">
-      <!-- Изображение продукта -->
       <div class="bg-white rounded-xl shadow-md p-6">
         <img 
           :src="product.imageUrl" 
@@ -50,7 +47,6 @@ onMounted(async () => {
         >
       </div>
       
-      <!-- Информация о продукте -->
       <div class="space-y-6">
         <h1 class="text-4xl font-bold text-gray-800">{{ product.title }}</h1>
         

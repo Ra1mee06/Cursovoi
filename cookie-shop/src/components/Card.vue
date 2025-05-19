@@ -34,7 +34,6 @@ const handleProductClick = () => {
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <!-- Кнопка удаления -->
     <div v-if="onClickRemove" class="absolute top-3 left-3 z-10">
       <button
         @click.stop="onClickRemove"
@@ -44,7 +43,6 @@ const handleProductClick = () => {
       </button>
     </div>
 
-    <!-- Кнопка избранного -->
     <img
       v-if="onClickFavorite"
       :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
@@ -53,7 +51,6 @@ const handleProductClick = () => {
       alt="Favorite"
     />
 
-    <!-- Область с изображением -->
     <div class="relative overflow-hidden rounded-lg mb-4 h-48" @click="handleProductClick">
       <img 
         :src="imageUrl" 
@@ -61,8 +58,7 @@ const handleProductClick = () => {
         class="w-full h-full object-contain transition-transform duration-300"
         :class="{'scale-105': isHovered}"
       />
-      
-      <!-- Кнопка "Подробнее" -->
+
       <div
         class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-all duration-300"
         :class="{'bg-opacity-20': isHovered}"
@@ -77,7 +73,6 @@ const handleProductClick = () => {
       </div>
     </div>
 
-    <!-- Информация о товаре -->
     <p class="mt-2 font-medium text-lg">{{ title }}</p>
 
     <div class="flex justify-between mt-3 items-center">
